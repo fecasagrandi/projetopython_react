@@ -11,6 +11,7 @@ import {
 import Cartao from '../../components/Cartao';
 import Botao from '../../components/Botao';
 import { BuscarCategorias, CriarCategoria, AtualizarCategoria, ExcluirCategoria, ObterUsuarioAtual } from '../../services/ApiService';
+import { usePopup } from '../../contexts/PopupContext';
 
 const ListaCategorias = () => {
   const [categorias, setCategorias] = useState([]);
@@ -19,6 +20,7 @@ const ListaCategorias = () => {
   const [novaCategoria, setNovaCategoria] = useState('');
   const [categoriaEditando, setCategoriaEditando] = useState(null);
   const [nomeEditado, setNomeEditado] = useState('');
+  const { showPopup } = usePopup();
 
   useEffect(() => {
     carregarCategorias();
@@ -100,17 +102,25 @@ const ListaCategorias = () => {
   };
 
   const handleExcluirCategoria = async (id) => {
-    if (window.confirm('Tem certeza que deseja excluir esta categoria?')) {
-      try {
-        setCarregando(true);
-        await ExcluirCategoria(id);
-        await carregarCategorias();
-      } catch (error) {
-        console.error("Erro ao excluir categoria:", error);
-        setErro("Falha ao excluir categoria. Por favor, tente novamente.");
-        setCarregando(false);
+    showPopup(
+      "Confirmar exclusão",
+      "Tem certeza que deseja excluir esta categoria?",
+      false,
+      0,
+      async (confirmed) => {
+        if (confirmed) {
+          try {
+            setCarregando(true);
+            await ExcluirCategoria(id);
+            await carregarCategorias();
+          } catch (error) {
+            console.error("Erro ao excluir categoria:", error);
+            setErro("Falha ao excluir categoria. Por favor, tente novamente.");
+            setCarregando(false);
+          }
+        }
       }
-    }
+    );
   };
 
   return (

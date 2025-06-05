@@ -5,6 +5,7 @@ import Cartao from '../../components/Cartao';
 import ItemTarefa from '../../components/ItemTarefa';
 import Botao from '../../components/Botao';
 import { BuscarTarefas, AtualizarTarefa, ExcluirTarefa } from '../../services/ApiService';
+import { usePopup } from '../../contexts/PopupContext';
 
 const ListaTarefas = () => {
   const [tarefas, setTarefas] = useState([]);
@@ -12,6 +13,7 @@ const ListaTarefas = () => {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
   const [filtroAtivo, setFiltroAtivo] = useState('todas');
+  const { showPopup } = usePopup();
 
   useEffect(() => {
     const carregarTarefas = async () => {
@@ -74,15 +76,23 @@ const ListaTarefas = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Tem certeza que deseja excluir esta tarefa?')) {
-      try {
-        await ExcluirTarefa(id);
-        setTarefas(tarefas.filter(tarefa => tarefa.id !== id));
-      } catch (error) {
-        console.error("Erro ao excluir tarefa:", error);
-        setErro("Falha ao excluir tarefa. Por favor, tente novamente.");
+    showPopup(
+      "Confirmar exclusão",
+      "Tem certeza que deseja excluir esta tarefa?",
+      false,
+      0,
+      async (confirmed) => {
+        if (confirmed) {
+          try {
+            await ExcluirTarefa(id);
+            setTarefas(tarefas.filter(tarefa => tarefa.id !== id));
+          } catch (error) {
+            console.error("Erro ao excluir tarefa:", error);
+            setErro("Falha ao excluir tarefa. Por favor, tente novamente.");
+          }
+        }
       }
-    }
+    );
   };
 
   return (

@@ -37,15 +37,23 @@ const ListaHabitos = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    if (window.confirm('Tem certeza que deseja excluir este hábito?')) {
-      try {
-        await ExcluirHabito(id);
-        setHabitos(habitos.filter(habito => habito.id !== id));
-      } catch (error) {
-        console.error("Erro ao excluir hábito:", error);
-        setErro("Falha ao excluir hábito. Por favor, tente novamente.");
+    showPopup(
+      "Confirmar exclusão",
+      "Tem certeza que deseja excluir este hábito?",
+      false,
+      0,
+      async (confirmed) => {
+        if (confirmed) {
+          try {
+            await ExcluirHabito(id);
+            setHabitos(habitos.filter(habito => habito.id !== id));
+          } catch (error) {
+            console.error("Erro ao excluir hábito:", error);
+            setErro("Falha ao excluir hábito. Por favor, tente novamente.");
+          }
+        }
       }
-    }
+    );
   };
 
   const handleCompletarHabito = async (id) => {
