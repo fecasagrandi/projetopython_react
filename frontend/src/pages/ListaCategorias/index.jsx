@@ -50,7 +50,6 @@ const ListaCategorias = () => {
     if (!novaCategoria.trim()) return;
     
     try {
-      // Obter o usuário autenticado
       const usuarioAtual = ObterUsuarioAtual();
       if (!usuarioAtual) {
         setErro("Você precisa estar autenticado para criar categorias.");
@@ -58,13 +57,10 @@ const ListaCategorias = () => {
       }
       
       setCarregando(true);
-      // Simplificar os dados enviados para apenas o nome da categoria
-      // já que o modelo Categoria no backend não tem campo Usuario
       const categoriaData = {
         Nome_Categoria: novaCategoria
       };
       
-      console.log('Tentando criar categoria:', categoriaData);
       await CriarCategoria(categoriaData);
       console.log('Categoria criada com sucesso');
       setNovaCategoria('');

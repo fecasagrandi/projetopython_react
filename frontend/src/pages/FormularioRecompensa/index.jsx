@@ -90,7 +90,7 @@ const FormularioRecompensa = () => {
           try {
             await DesconquistarRecompensa(id);
           } catch (desconquistarError) {
-            // Continuar mesmo se houver erro
+
           }
         }
         

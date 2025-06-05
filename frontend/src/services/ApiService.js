@@ -58,7 +58,7 @@ export const FazerLogout = () => {
   localStorage.removeItem('usuarioKaizen');
 };
 
-// Serviços de Tarefas
+// API de Tarefas
 export const BuscarTarefas = async () => {
   try {
     const usuario = ObterUsuarioAtual();
@@ -120,7 +120,7 @@ export const RemoverCategoriaTarefa = async (tarefaId, categoriaId) => {
   }
 };
 
-// Serviços de Hábitos
+// API de Hábitos
 export const BuscarHabitos = async () => {
   try {
     const usuario = ObterUsuarioAtual();
@@ -180,7 +180,7 @@ export const ExcluirHabito = async (id) => {
   }
 };
 
-// Serviços de Recompensas
+// API de Recompensas
 export const BuscarRecompensas = async () => {
   try {
     const usuario = ObterUsuarioAtual();
@@ -289,7 +289,7 @@ export const ExcluirRecompensa = async (id) => {
   }
 };
 
-// Serviços de Usuários
+// API de Usuários
 export const BuscarUsuarios = async () => {
   try {
     const response = await Api.get('/usuarios/');
@@ -317,7 +317,7 @@ export const BuscarDadosUsuarioAtual = async () => {
   }
 };
 
-// Serviços de Categorias
+// API de Categorias
 export const BuscarCategorias = async () => {
   try {
     const usuario = ObterUsuarioAtual();
@@ -359,7 +359,7 @@ export const ExcluirCategoria = async (id) => {
   }
 };
 
-// Serviços de Estatísticas
+// API de Estatísticas
 export const BuscarEstatisticas = async (periodo = 'semana') => {
   try {
     const usuario = ObterUsuarioAtual();
