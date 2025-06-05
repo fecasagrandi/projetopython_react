@@ -12,52 +12,41 @@ import {
 } from './styles';
 import { FazerLogin, FazerRegistro } from '../../services/ApiService';
 import styled from 'styled-components';
+import { FaExclamationCircle, FaCheckCircle, FaTimes } from 'react-icons/fa';
 
-const Logo = styled.div`
+const CloseButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--accent-blue);
-  letter-spacing: 1px;
+  padding: 0.25rem;
+  
+  &:hover {
+    color: #ffffff;
+  }
 `;
 
-const LogoAccent = styled.span`
-  color: var(--text-color);
-`;
+
+
+
+
+
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 1.5rem;
   margin-bottom: 1rem;
 `;
 
-const InputWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-`;
-
-const InputIcon = styled.span`
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-`;
-
 const StyledInput = styled(Input)`
-  padding-left: 40px;
   width: 100%;
 `;
 
@@ -67,6 +56,7 @@ const Login = () => {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('');
   const [erro, setErro] = useState('');
   const [sucesso, setSucesso] = useState('');
   const [carregando, setCarregando] = useState(false);
@@ -91,6 +81,12 @@ const Login = () => {
           return;
         }
         
+        if (senha !== confirmarSenha) {
+          setErro('As senhas não coincidem');
+          setCarregando(false);
+          return;
+        }
+        
         const response = await FazerRegistro(nome, email, senha);
         setSucesso(response.message || 'Registro realizado com sucesso!');
         setTimeout(() => {
@@ -108,24 +104,38 @@ const Login = () => {
     setIsLogin(!isLogin);
     setErro('');
     setSucesso('');
+    setNome('');
+    setEmail('');
+    setSenha('');
+    setConfirmarSenha('');
+  };
+  
+  const handleCloseClick = () => {
+    toggleMode();
   };
 
   return (
     <Container>
       <FormContainer>
-        <Logo>
-          Kaizen<LogoAccent>.</LogoAccent>
-        </Logo>
+        <CloseButton onClick={handleCloseClick}>
+          <FaTimes />
+        </CloseButton>
         
-        <Title>{isLogin ? 'Login' : 'Cadastro'}</Title>
+        <Title>{isLogin ? 'Entrar' : 'Criar conta'}</Title>
         
-        {erro && <ErrorMessage>{erro}</ErrorMessage>}
-        {sucesso && <SuccessMessage>{sucesso}</SuccessMessage>}
+        {erro && <ErrorMessage><FaExclamationCircle size={16} />{erro}</ErrorMessage>}
+        {sucesso && <SuccessMessage><FaCheckCircle size={16} />{sucesso}</SuccessMessage>}
         
         <Form onSubmit={handleSubmit}>
           {!isLogin && (
-            <InputWrapper>
-              <InputIcon>👤</InputIcon>
+            <>
+              <StyledInput
+                type="email"
+                placeholder="E-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={carregando}
+              />
               <StyledInput
                 type="text"
                 placeholder="Nome de usuário"
@@ -133,40 +143,51 @@ const Login = () => {
                 onChange={(e) => setNome(e.target.value)}
                 disabled={carregando}
               />
-            </InputWrapper>
+              <StyledInput
+                type="password"
+                placeholder="Senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                disabled={carregando}
+              />
+              <StyledInput
+                type="password"
+                placeholder="Confirmar senha"
+                value={confirmarSenha}
+                onChange={(e) => setConfirmarSenha(e.target.value)}
+                disabled={carregando}
+              />
+            </>
           )}
           
-          <InputWrapper>
-            <InputIcon>✉️</InputIcon>
-            <StyledInput
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={carregando}
-            />
-          </InputWrapper>
-          
-          <InputWrapper>
-            <InputIcon>🔒</InputIcon>
-            <StyledInput
-              type="password"
-              placeholder="Senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              disabled={carregando}
-            />
-          </InputWrapper>
+          {isLogin && (
+            <>
+              <StyledInput
+                type="email"
+                placeholder="E-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={carregando}
+              />
+              <StyledInput
+                type="password"
+                placeholder="Senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                disabled={carregando}
+              />
+            </>
+          )}
           
           <Button type="submit" disabled={carregando}>
-            {carregando ? 'Processando...' : isLogin ? 'Entrar' : 'Cadastrar'}
+            {carregando ? 'Processando...' : isLogin ? 'ENTRAR' : 'CADASTRAR-SE'}
           </Button>
         </Form>
         
         <ToggleText onClick={toggleMode}>
           {isLogin 
-            ? 'Não tem uma conta? Cadastre-se' 
-            : 'Já tem uma conta? Faça login'}
+            ? 'Não tem uma conta? Criar conta' 
+            : 'Já tem uma conta? Entrar'}
         </ToggleText>
       </FormContainer>
     </Container>

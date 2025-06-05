@@ -5,18 +5,15 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: var(--primary-bg);
-  background-image: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+  background-color: #111827;
 `;
 
 export const FormContainer = styled.div`
   width: 100%;
   max-width: 400px;
-  padding: 2.5rem;
-  background-color: var(--secondary-bg);
-  border-radius: var(--border-radius);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  background-color: #111827;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,118 +22,126 @@ export const FormContainer = styled.div`
 export const Title = styled.h1`
   text-align: center;
   margin-bottom: 1.5rem;
-  color: var(--text-color);
+  color: #ffffff;
   font-weight: 600;
-  position: relative;
-  padding-bottom: 0.75rem;
-  
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background-color: var(--accent-blue);
-    border-radius: 3px;
-  }
+  font-size: 1.5rem;
 `;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  width: 100%;
 `;
 
 export const Input = styled.input`
   padding: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--text-color);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: #1e293b;
+  color: #ffffff;
   transition: all 0.2s ease;
+  width: 100%;
+  margin-bottom: 0.75rem;
   
   &::placeholder {
-    color: var(--text-muted);
+    color: #94a3b8;
   }
   
   &:focus {
     outline: none;
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2);
+    border-color: #3b82f6;
   }
   
   &:disabled {
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: rgba(30, 41, 59, 0.7);
     cursor: not-allowed;
     opacity: 0.7;
   }
 `;
 
 export const Button = styled.button`
-  padding: 0.85rem;
-  background-color: var(--accent-blue);
+  padding: 0.75rem;
+  background-color: #3b82f6;
   color: white;
   border: none;
-  border-radius: var(--border-radius);
-  font-size: 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  letter-spacing: 0.5px;
+  text-transform: uppercase;
   width: 100%;
   margin-top: 0.5rem;
   
   &:hover {
-    background-color: #1a7ade;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+    background-color: #2563eb;
   }
   
   &:active {
-    transform: translateY(0);
+    background-color: #1d4ed8;
   }
   
   &:disabled {
-    background-color: rgba(30, 144, 255, 0.5);
+    background-color: #60a5fa;
     cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
   }
 `;
 
 export const ToggleText = styled.p`
   text-align: center;
   margin-top: 1.5rem;
-  color: var(--accent-blue);
+  color: #3b82f6;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  font-size: 0.8rem;
   
   &:hover {
-    color: #1a7ade;
-    transform: translateY(-1px);
+    text-decoration: underline;
   }
 `;
 
 export const ErrorMessage = styled.div`
   padding: 0.75rem;
-  background-color: rgba(244, 67, 54, 0.1);
-  color: var(--task-red);
-  border-radius: var(--border-radius);
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border-radius: 4px;
   margin-bottom: 1rem;
-  border-left: 3px solid var(--task-red);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 export const SuccessMessage = styled.div`
   padding: 0.75rem;
-  background-color: rgba(40, 200, 64, 0.1);
-  color: var(--dot-color-3);
-  border-radius: var(--border-radius);
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border-radius: 4px;
   margin-bottom: 1rem;
-  border-left: 3px solid var(--dot-color-3);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const Divider = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  width: 100%;
+  
+  &:before, &:after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  span {
+    padding: 0 1rem;
+    color: #94a3b8;
+    font-size: 0.8rem;
+  }
 `;
