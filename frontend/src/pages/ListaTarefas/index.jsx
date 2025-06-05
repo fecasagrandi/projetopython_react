@@ -65,9 +65,24 @@ const ListaTarefas = () => {
 
   const handleStatusChange = async (id, tarefaAtualizada) => {
     try {
-      await AtualizarTarefa(id, tarefaAtualizada);
+      // Garantir que as categorias sejam preservadas
+      const tarefaExistente = tarefas.find(t => t.id === id);
+      const categoriasIds = tarefaExistente.Categorias?.map(cat => cat.id) || [];
+      
+      // Incluir as categorias na atualização
+      const dadosAtualizados = {
+        ...tarefaAtualizada,
+        categorias_ids: categoriasIds
+      };
+      
+      await AtualizarTarefa(id, dadosAtualizados);
+      
+      // Atualizar o estado local mantendo as categorias
       setTarefas(tarefas.map(tarefa => 
-        tarefa.id === id ? tarefaAtualizada : tarefa
+        tarefa.id === id ? {
+          ...tarefaAtualizada,
+          Categorias: tarefaExistente.Categorias
+        } : tarefa
       ));
     } catch (error) {
       console.error("Erro ao atualizar status da tarefa:", error);
