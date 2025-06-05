@@ -23,12 +23,11 @@ const Popup = ({
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Se tiver duração e não for um popup de confirmação (com callback)
     if (duration > 0 && !hasCallback) {
       const timer = setTimeout(() => {
         setIsVisible(false);
         if (onClose) {
-          setTimeout(onClose, 300); // Aguarda a animação de saída terminar
+          setTimeout(onClose, 300); 
         }
       }, duration);
 
@@ -39,14 +38,14 @@ const Popup = ({
   const handleClose = () => {
     setIsVisible(false);
     if (onClose) {
-      setTimeout(onClose, 300); // Aguarda a animação de saída terminar
+      setTimeout(onClose, 300); 
     }
   };
   
   const handleConfirm = () => {
     setIsVisible(false);
     if (onConfirm) {
-      setTimeout(onConfirm, 300); // Aguarda a animação de saída terminar
+      setTimeout(onConfirm, 300); 
     }
   };
 
