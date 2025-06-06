@@ -26,19 +26,10 @@ O projeto está organizado da seguinte forma:
 - Styled Components
 - Axios
 
-## Como Iniciar
+## Como Acessar
+Depois de instalar as dependências, realizar o migrate e iniciar o frontend com npm start e o backend com python manage.py runserver
 
-1. Instale as dependências:
-```
-npm install
-```
-
-2. Inicie o servidor de desenvolvimento:
-```
-npm start
-```
-
-3. Acesse a aplicação em [http://localhost:3000](http://localhost:3000)
+1. Acesse a aplicação em [http://localhost:3000](http://localhost:3000)
 
 ## Observações
 
